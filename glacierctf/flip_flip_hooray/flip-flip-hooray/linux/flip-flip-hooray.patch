@@ -1,0 +1,32 @@
+diff -Naru a/kernel/sys.c b/kernel/sys.c
+--- a/kernel/sys.c	2025-11-02 14:18:05.000000000 +0100
++++ b/kernel/sys.c	2025-11-11 16:41:53.462622275 +0100
+@@ -2989,3 +2989,20 @@
+ 	return 0;
+ }
+ #endif /* CONFIG_COMPAT */
++
++SYSCALL_DEFINE2(flipper, void __user *, addr, __u8, bit)
++{
++    static u64 flips_left = 0xDEADBADC0DE00001;
++
++    if (bit >= 8)
++      return -EINVAL;
++    if (flips_left <= 0xDEADBADC0DE00000)
++      return -EINVAL;
++
++    u8 *p = (u8 *)addr;
++    *p ^= (1U << bit);
++
++    flips_left -= 1;
++
++    return 0;
++}
+diff -Naru a/scripts/syscall.tbl b/scripts/syscall.tbl
+--- a/scripts/syscall.tbl	2025-11-02 14:18:05.000000000 +0100
++++ b/scripts/syscall.tbl	2025-11-11 16:41:54.870632757 +0100
+@@ -410,3 +410,4 @@
+ 467	common	open_tree_attr			sys_open_tree_attr
+ 468	common	file_getattr			sys_file_getattr
+ 469	common	file_setattr			sys_file_setattr
++666	common	flipper     			sys_flipper

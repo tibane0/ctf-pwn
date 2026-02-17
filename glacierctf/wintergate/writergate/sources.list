@@ -1,0 +1,6 @@
+
+deb     https://snapshot.debian.org/archive/debian/20251122T024033Z/ bookworm main
+deb-src https://snapshot.debian.org/archive/debian/20251122T024033Z/ bookworm main
+deb     https://snapshot.debian.org/archive/debian-security/20251122T024033Z/ bookworm/updates main
+deb-src https://snapshot.debian.org/archive/debian-security/20251122T024033Z/ bookworm/updates main
+
